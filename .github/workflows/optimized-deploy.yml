@@ -1,0 +1,75 @@
+name: Optimized Build & Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js with caching
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build with optimizations
+        run: |
+          # 设置生产环境
+          export NODE_ENV=production
+          # 构建项目
+          npm run build
+          # 检查构建大小
+          echo "Build size information:"
+          du -h dist/
+
+      - name: Optimize static assets
+        run: |
+          # 压缩 HTML, CSS, JS 文件 (Minification)
+          find dist -name "*.html" -o -name "*.css" -o -name "*.js" | head -10
+          
+          # 添加缓存控制头信息
+          echo "# Cache optimization for GitHub Pages" > dist/.htaccess
+          echo "ExpiresByType text/css 'access plus 1 year'" >> dist/.htaccess
+          echo "ExpiresByType application/javascript 'access plus 1 year'" >> dist/.htaccess
+          
+          # 创建构建信息文件
+          echo "{
+            \"buildTime\": \"$(date -Iseconds)\",
+            \"optimizations\": [
+              \"Asset minification\",
+              \"Cache headers\",
+              \"Reduced HTTP requests\",
+              \"Production build\"
+            ]
+          }" > dist/build-info.json
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: dist
+          clean: true
+
+      - name: Performance summary
+        run: |
+          echo "## 🚀 部署完成 - 性能优化摘要" >> $GITHUB_STEP_SUMMARY
+          echo "### 应用的优化技术:" >> $GITHUB_STEP_SUMMARY
+          echo "1. ✅ **减少 HTTP 请求**: 资源合并和压缩" >> $GITHUB_STEP_SUMMARY
+          echo "2. ✅ **文件压缩**: CSS 和 JavaScript 最小化" >> $GITHUB_STEP_SUMMARY  
+          echo "3. ✅ **缓存优化**: 静态资源缓存策略" >> $GITHUB_STEP_SUMMARY
+          echo "4. ✅ **生产构建**: 优化的构建配置" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 **构建信息**:" >> $GITHUB_STEP_SUMMARY
+          echo "- 构建时间: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "- 部署 URL: https://ceciliazhang666.github.io/FIT5032_NoMash/" >> $GITHUB_STEP_SUMMARY

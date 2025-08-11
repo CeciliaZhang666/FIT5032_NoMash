@@ -1,0 +1,56 @@
+/* 图像优化示例 - Lab 12.3 技术2 */
+
+/* 2.1 使用 CSS 替代小图标 */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.success-icon {
+  width: 16px;
+  height: 16px;
+  background: #28a745;
+  border-radius: 50%;
+  position: relative;
+}
+
+.success-icon::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 3px;
+  height: 7px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* 响应式图像优化 */
+.responsive-image {
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+}
+
+/* CDN 优化提示 */
+.performance-note {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* 减少重绘和回流的优化 */
+.optimized-element {
+  will-change: transform;
+  transform: translateZ(0);
+}

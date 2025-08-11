@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import PerformanceMonitor from '@/components/PerformanceMonitor.vue'
 
 const formData = ref({
   username: '',
@@ -106,6 +107,9 @@ const validatePassword = (blur) => {
 </script>
 
 <template>
+  <!-- Lab 12.3 性能优化演示 -->
+  <PerformanceMonitor />
+  
   <!-- 🗄️ W3. Library Registration Form -->
   <div class="container mt-5">
     <div class="row">

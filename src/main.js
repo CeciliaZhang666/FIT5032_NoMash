@@ -50,6 +50,7 @@
 // import './assets/main.css'
 // import '@/assets/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import '@/assets/optimization.css' // Lab 12.3 性能优化样式
 
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
