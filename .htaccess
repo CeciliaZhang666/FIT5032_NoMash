@@ -1,0 +1,3 @@
+# Cache optimization for GitHub Pages
+ExpiresByType text/css 'access plus 1 year'
+ExpiresByType application/javascript 'access plus 1 year'

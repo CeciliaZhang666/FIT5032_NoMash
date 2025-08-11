@@ -1,0 +1,9 @@
+{
+  "buildTime": "2025-08-11T12:59:24+00:00",
+  "optimizations": [
+    "Asset minification",
+    "Cache headers",
+    "Reduced HTTP requests",
+    "Production build"
+  ]
+}
