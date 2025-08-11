@@ -3,32 +3,31 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main # 当推送到 main 分支时触发
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # 授予工作流写入 gh-pages 分支的权限
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4 # 检出你的仓库代码
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # 使用 Node.js 20 版本
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci # 安装项目依赖
 
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build # 构建项目，生成 /dist 目录
 
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.1.4
-      with:
-        branch: gh-pages
-        folder: dist
-
-permissions:
-  contents: write
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.1.4
+        with:
+          branch: gh-pages # 部署到 gh-pages 分支
+          folder: dist # 部署 /dist 目录的内容
